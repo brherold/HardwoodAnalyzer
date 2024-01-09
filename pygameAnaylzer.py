@@ -10,22 +10,30 @@ def gameAnaylzer(gameUrl):
   infoList = soup.find_all("td",class_="left")
   infoList = soup.find_all("td",class_="left")
   gameData = {
-    "awayTeam":{
-      "name": infoList[1].text.replace("\xa0"," "),
-      "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
-      "players":[],
-      "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-      "totalDriving":[0,0]
-    }
-    ,
-    "homeTeam":{
-      "name": infoList[2].text.replace("\xa0"," "),
-      "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
-      "players":[],
-      "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-      "totalDriving":[0,0]
-    }
+  "awayTeam":{
+    "name": infoList[1].text.replace("\xa0"," "),
+    "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
+    "players":[],
+    "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "totalDriving":[0,0],
+    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}}
   }
+  ,
+  "homeTeam":{
+    "name": infoList[2].text.replace("\xa0"," "),
+    "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
+    "players":[],
+    "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "totalDriving":[0,0],
+    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}}
+  }
+}
 
 
 
@@ -144,12 +152,22 @@ def gameAnaylzer(gameUrl):
           player_index = words.index(shot.split()[0]) - 1
           player_name = words[player_index]
           team = words[0][:-1]
+
+            #Finds the type of defense (doesn't matter for gameData["team"])
+          try:
+            defense = [defense for defense in gameData["awayTeam"]["defense"] if defense in event][0]
+          except IndexError:
+            defense = "no defense"
+
           if "Slam dunk" in event or "shot goes in" in event or "tips it in" == shot:
             shot_attempt = 1
           
           #For Fast-breaks
-          if shot in Finishing and ("Breakaway" in event or "Fast break opportunity" in event) and "slow it down" not in event:
-            shot_type = "Finishing"
+
+          if ("Breakaway" in event or "Fast break opportunity" in event) and "slow it down" not in event:
+            defense = "transition"
+            if shot in Finishing:
+              shot_type = "Finishing"
 
           #For Drives
           if shot in Finishing and "drives" in event and words[words.index("drives") - 1] == player_name:
@@ -158,8 +176,11 @@ def gameAnaylzer(gameUrl):
           #finds player and accumlates the shot in gameData
           if team in gameData["homeTeam"]["name"]:
             team = "homeTeam"
+            oppTeam = "awayTeam"
           else:
             team = "awayTeam"
+            oppTeam = "homeTeam"
+
           for player in gameData[team]["players"]:
             if player["name"] == player_name:
               player["shots"][shot_type][0] += shot_attempt
@@ -167,5 +188,8 @@ def gameAnaylzer(gameUrl):
               gameData[team]["totalShots"][shot_type][0] += shot_attempt
               gameData[team]["totalShots"][shot_type][1] += 1
 
-  return gameData
+              if defense != "no defense":
+                gameData[oppTeam]["defense"][defense][shot_type][0] += shot_attempt
+                gameData[oppTeam]["defense"][defense][shot_type][1] += 1
 
+  return gameData
