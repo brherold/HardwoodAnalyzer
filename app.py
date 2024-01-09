@@ -12,16 +12,25 @@ def home():
     if request.method == 'POST':
         code = request.form['code']
         if len(code) > 4:
-            return redirect(url_for('game_analyzer', code=code))
+            url = code
+            #return redirect(url_for('game_analyzer', url=url))
+
+            sample_data = gameAnaylzer(url)
+            return render_template('gameAnalyzer.html',data = sample_data)
+            
+
         else:
             return redirect(url_for('seasonAnalyzerYear', code=code))
     return render_template('home.html')
-
-@app.route('/gameAnalyzer/')
-def game_analyzer(code):
+'''
+@app.route('/gameAnalyzer')
+def game_analyzer(url):
     # Handle game analysis based on the code parameter
-    sample_data = gameAnaylzer(code)
-    return render_template('gameAnalyzer.html',data=sample_data)
+    sample_data = gameAnaylzer(url)
+    return render_template('gameAnalyzer.html',data = sample_data)
+'''
+
+
 
 @app.route('/seasonAnalyzerYear/<code>', methods=['GET', 'POST'])
 def seasonAnalyzerYear(code):

@@ -26,7 +26,7 @@
     th, td {
       border: 1px solid #dddddd;
       text-align: left;
-      padding: 8px;
+      padding: 15px;
     }
 
     th {
@@ -121,31 +121,30 @@
   </tr>
   {% endfor %}
   <tr>
-    <td>Total Shots</td>
+    <td><strong>Total Shots</strong></td>
     <td></td>
-    <td>
-      {{ data['totalShots']['Finishing'][0] }}/{{ data['totalShots']['Finishing'][1] }}
-      {% set finishing_percentage = (data['totalShots']['Finishing'][0] / data['totalShots']['Finishing'][1]) * 100 if data['totalShots']['Finishing'][1] != 0 else 0 %}
+    <td><strong>{{ data['totalShots']['Finishing'][0] }}/{{ data['totalShots']['Finishing'][1] }}
+      {% set finishing_percentage = (data['totalShots']['Finishing'][0] / data['totalShots']['Finishing'][1]) * 100 if data['totalShots']['Finishing'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % finishing_percentage }}%)</span>
     </td>
     <td>
-      {{ data['totalShots']['Inside Shot'][0] }}/{{ data['totalShots']['Inside Shot'][1] }}
-      {% set inside_shot_percentage = (data['totalShots']['Inside Shot'][0] / data['totalShots']['Inside Shot'][1]) * 100 if data['totalShots']['Inside Shot'][1] != 0 else 0 %}
+      <strong>{{ data['totalShots']['Inside Shot'][0] }}/{{ data['totalShots']['Inside Shot'][1] }}
+        {% set inside_shot_percentage = (data['totalShots']['Inside Shot'][0] / data['totalShots']['Inside Shot'][1]) * 100 if data['totalShots']['Inside Shot'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % inside_shot_percentage }}%)</span>
     </td>
     <td>
-      {{ data['totalShots']['Mid-Range'][0] }}/{{ data['totalShots']['Mid-Range'][1] }}
-      {% set mid_range_percentage = (data['totalShots']['Mid-Range'][0] / data['totalShots']['Mid-Range'][1]) * 100 if data['totalShots']['Mid-Range'][1] != 0 else 0 %}
+      <strong>{{ data['totalShots']['Mid-Range'][0] }}/{{ data['totalShots']['Mid-Range'][1] }}
+        {% set mid_range_percentage = (data['totalShots']['Mid-Range'][0] / data['totalShots']['Mid-Range'][1]) * 100 if data['totalShots']['Mid-Range'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % mid_range_percentage }}%)</span>
     </td>
     <td>
-      {{ data['totalShots']['3-Pointer'][0] }}/{{ data['totalShots']['3-Pointer'][1] }}
-      {% set three_pointer_percentage = (data['totalShots']['3-Pointer'][0] / data['totalShots']['3-Pointer'][1]) * 100 if data['totalShots']['3-Pointer'][1] != 0 else 0 %}
+      <strong>{{ data['totalShots']['3-Pointer'][0] }}/{{ data['totalShots']['3-Pointer'][1] }}
+        {% set three_pointer_percentage = (data['totalShots']['3-Pointer'][0] / data['totalShots']['3-Pointer'][1]) * 100 if data['totalShots']['3-Pointer'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % three_pointer_percentage }}%)</span>
     </td>
     <td>
-      {{ data['totalDriving'][0] }}/{{ data['totalDriving'][1] }}
-      {% set driving_percentage = (data['totalDriving'][0] / data['totalDriving'][1]) * 100 if data['totalDriving'][1] != 0 else 0 %}
+      <strong>{{ data['totalDriving'][0] }}/{{ data['totalDriving'][1] }}
+        {% set driving_percentage = (data['totalDriving'][0] / data['totalDriving'][1]) * 100 if data['totalDriving'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % driving_percentage }}%)</span>
     </td>
   </tr>
