@@ -8,19 +8,24 @@ def gameAnaylzer(gameUrl):
   soup = BeautifulSoup(page.text,"html")
 
   infoList = soup.find_all("td",class_="left")
+  infoList = soup.find_all("td",class_="left")
   gameData = {
-  "awayTeam":{
-    "name": infoList[1].text.replace("\xa0"," "),
-    "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
-    "players":[] 
+    "awayTeam":{
+      "name": infoList[1].text.replace("\xa0"," "),
+      "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
+      "players":[],
+      "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+      "totalDriving":[0,0]
+    }
+    ,
+    "homeTeam":{
+      "name": infoList[2].text.replace("\xa0"," "),
+      "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
+      "players":[],
+      "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+      "totalDriving":[0,0]
+    }
   }
-  ,
-  "homeTeam":{
-    "name": infoList[2].text.replace("\xa0"," "),
-    "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
-    "players":[]
-  }
-}
 
 
 
@@ -112,6 +117,8 @@ def gameAnaylzer(gameUrl):
         if player["name"] == player_name:
           player["driving"][0] += drive_attempt
           player["driving"][1] += 1
+          gameData[team]["totalDriving"][0] += drive_attempt
+          gameData[team]["totalDriving"][1] += 1
 
 
   #Delete Game Events with Non-And One Fouls (second free throws occur) and Charging Fouls
@@ -157,5 +164,8 @@ def gameAnaylzer(gameUrl):
             if player["name"] == player_name:
               player["shots"][shot_type][0] += shot_attempt
               player["shots"][shot_type][1] += 1
+              gameData[team]["totalShots"][shot_type][0] += shot_attempt
+              gameData[team]["totalShots"][shot_type][1] += 1
+
   return gameData
-        
+
