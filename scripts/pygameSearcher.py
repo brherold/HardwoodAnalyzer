@@ -71,7 +71,7 @@ def gameSearcher(teamCode,year):
 
 
   anaylzedGames = []
-  for games in conGameLinks[0:2]:
+  for games in conGameLinks:
     anaylzedGames.append(gameAnaylzer(games)) 
 
   #Puts together Game Data for the Given Team for Every Game Played

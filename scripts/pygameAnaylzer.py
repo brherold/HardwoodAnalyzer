@@ -1,11 +1,43 @@
 from bs4 import BeautifulSoup
 import requests
+import hashlib
+import os
 #USE PYTHON ANACADONA 3.8.5 to RUN
+
+#Saves HTML Content to local File
+def save_html_to_file(content, filename):
+    with open(filename, 'w', encoding='utf-8') as file:
+        file.write(content)
+
+# Function to load HTML content from a local file
+def load_html_from_file(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return file.read()
+
 
 def gameAnaylzer(gameUrl):
   #url= "http://onlinecollegebasketball.org/game/856168"
-  page = requests.get(gameUrl)
-  soup = BeautifulSoup(page.text,"html")
+  gameCode = gameUrl.split("/")[-1]
+  cache_folder = "GamesHTML"
+  #cache_filename = os.path.join(cache_folder,hashlib.md5(gameUrl.encode()).hexdigest() + ".html")
+  cache_filename = os.path.join(cache_folder, f"{gameCode}.html")
+
+  try:
+        # Try to load HTML content from the local cache
+        html_content = load_html_from_file(cache_filename)
+        #print("Content loaded from local cache.")
+  except FileNotFoundError:
+        # If not found, fetch the content from the URL
+        response = requests.get(gameUrl)
+        html_content = response.text
+
+        # Save HTML content to the local cache
+        save_html_to_file(html_content, cache_filename)
+        #print("Content fetched from URL and saved to local cache.")
+
+  soup = BeautifulSoup(html_content,"html")
+  #page = requests.get(gameUrl)
+  #soup = BeautifulSoup(page.text,"html")
 
   infoList = soup.find_all("td",class_="left")
   infoList = soup.find_all("td",class_="left")
@@ -201,4 +233,4 @@ def gameAnaylzer(gameUrl):
   return gameData
 
 
-#print(gameAnaylzer("http://onlinecollegebasketball.org/game/856168"))
+print(gameAnaylzer("http://onlinecollegebasketball.org/game/856168"))
