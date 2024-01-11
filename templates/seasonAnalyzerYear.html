@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Season Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 35px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Year of Season</h1>
+        <form action="{{ url_for('seasonAnalyzerYear', code=code) }}" method="POST">
+            <input type="text" name="year" placeholder="Enter year">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <a href="{{ url_for('home') }}"><button>Home</button></a>
+    </div>
+</body>
+</html>
