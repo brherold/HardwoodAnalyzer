@@ -70,7 +70,7 @@
 <h1>Team Information</h1>
 
 <!-- Away Team Table -->
-<h2>{{ data['awayTeam']['name'] }}</h2>
+<h2><a href="http://onlinecollegebasketball.org/team/{{data['awayTeam']['teamCode']}}">{{ data['awayTeam']['name'] }}</h2></a>
 <table>
   <tr>
     <th>Name</th>
@@ -83,7 +83,7 @@
   </tr>
   {% for player in data['awayTeam']['players'] %}
   <tr>
-    <td>{{ player['name'] }}</td>
+    <td><a href="http://onlinecollegebasketball.org/player/{{player['playerCode']}}">{{ player['name'] }}</td></a>
     <td>{{ player['position'] }}</td>
     <td>
       {{ player['shots']['Finishing'][0] }}/{{ player['shots']['Finishing'][1] }}
@@ -145,7 +145,7 @@
 </table>
 
 <!-- Home Team Table -->
-<h2>{{ data['homeTeam']['name'] }}</h2>
+<h2><a href="http://onlinecollegebasketball.org/team/{{data['homeTeam']['teamCode']}}">{{ data['homeTeam']['name'] }}</h2></a>
 <table>
   <tr>
     <th>Name</th>
@@ -158,7 +158,7 @@
   </tr>
   {% for player in data['homeTeam']['players'] %}
   <tr>
-    <td>{{ player['name'] }}</td>
+    <td><a href="http://onlinecollegebasketball.org/player/{{player['playerCode']}}">{{ player['name'] }}</td></a>
     <td>{{ player['position'] }}</td>
     <td>
       {{ player['shots']['Finishing'][0] }}/{{ player['shots']['Finishing'][1] }}

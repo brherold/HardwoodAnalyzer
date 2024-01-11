@@ -40,17 +40,23 @@ def gameAnaylzer(gameUrl):
   teamSwitch = 0 
   curTeam = "awayTeam"
   infoListPlayers = infoList[4:]  # cuts it to the first player in BoxScore
+  
+
 
   for i in range(len(infoListPlayers)):
+      
       if len(infoListPlayers[i].text.split("\xa0")) == 3:
+          playerCode = infoListPlayers[i].find("a").get("href").split("/")[2]
+          
           name, position = infoListPlayers[i].text.split("\xa0")[1:]
           
           # Append a new player dictionary if the player index exceeds the current list length
           if len(gameData[curTeam]["players"]) <= i:
-              gameData[curTeam]["players"].append({"name": name, "position": position.upper(), "shots": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}, "driving": [0, 0]})
+              gameData[curTeam]["players"].append({"name": name, "playerCode": playerCode,"position": position.upper(), "shots": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}, "driving": [0, 0]})
           else:
               # Update existing player information
               gameData[curTeam]["players"][i]["name"] = name
+              gameData[curTeam]["players"][i]["playerCode"] = playerCode
               gameData[curTeam]["players"][i]["position"] = position.upper()
               gameData[curTeam]["players"][i]["shots"] = {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}
               gameData[curTeam]["players"][i]["driving"] = [0, 0]

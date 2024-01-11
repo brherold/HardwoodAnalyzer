@@ -61,7 +61,7 @@
   </style>
 </head>
 <body>
-<h1>{{data["name"]}} {{year}}</h1>
+<h1><a href="http://onlinecollegebasketball.org/team/{{data['teamCode']}}">{{data["name"]}}</a> {{year}}</h1>
 
 <h2>Players</h2>
 <table>
@@ -76,7 +76,7 @@
   </tr>
   {% for player in data['players'] %}
   <tr>
-    <td>{{ player['name'] }}</td>
+    <td><a href="http://onlinecollegebasketball.org/player/{{player['playerCode']}}">{{ player['name'] }}</td></a>
     <td>{{ player['position'] }}</td>
     <td>
       {{ player['shots']['Finishing'][0] }}/{{ player['shots']['Finishing'][1] }}
