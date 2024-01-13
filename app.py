@@ -41,7 +41,7 @@ def seasonAnalyzerYear(code):
 
 @app.route("/seasonAnalyzer/<code>/<year>")
 def seasonAnalyzer(code, year):
-    sample_data = gameSearcher(code, year)
+    sample_data = gameSearcher(code, year,"")
     return render_template('seasonAnalyzer.html', data=sample_data,year=year)
 
 if __name__ == '__main__':

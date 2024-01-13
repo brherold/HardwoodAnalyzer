@@ -197,6 +197,12 @@
   </tr>
   {% endfor %}
 </table>
+<select name='GameType'>
+  <option value=''>Total</option>
+  <option value='Conference'>Conference</option>
+  <option value='Playoff'>Playoff</option>
+  <option value='Tournament'>Tournament</option>
+  </select>
 <a href="{{ url_for('home') }}"><button>Home</button></a>
 </body>
 </html>

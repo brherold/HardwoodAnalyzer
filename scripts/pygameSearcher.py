@@ -28,7 +28,7 @@ def load_html_from_file(filename):
 #Gets Team
 #teamCode = input("Enter Team Code")
 #year = input("Enter Season Year")
-def gameSearcher(teamCode,year):
+def gameSearcher(teamCode,year,gameType):
 
   teamScheduleUrl = "http://onlinecollegebasketball.org/schedule/"+teamCode + "/" + year
   
@@ -58,20 +58,41 @@ def gameSearcher(teamCode,year):
   #Gets List of All Played Games for Current Year
   columnList = soup2.find_all("tr")
   totalGameLinks = []
+  conGameLinks = []
+  playoffGameLinks = []
+  tournamentGameLinks = []
+
   for row in columnList:
     rowData = row.find_all("td")
     if len(rowData) == 8 and rowData[5].text != "NPY":
       totalGameLinks.append ("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
+      if rowData[2].text == "Conference":
+        conGameLinks.append("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
+      elif rowData[2].text == "Playoff":
+        playoffGameLinks.append("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
+      elif rowData[2].text == "Tournament":
+        tournamentGameLinks.append("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
 
-  conGameLinks = totalGameLinks[13:43] #Conference Games
+  #conGameLinks = totalGameLinks[13:43] #Conference Games
   #test = conGameLinks[0:2]
-
+  
 
   # In[4]:
+  if gameType == "Conference":
+    gameLinks = conGameLinks
+  elif gameType == "Playoff":
+    gameLinks = playoffGameLinks
+  elif gameType == "Tournament":
+    gameLinks = tournamentGameLinks
+  else:
+    gameLinks = totalGameLinks
+  
 
-
-  anaylzedGames = []
-  for games in conGameLinks:
+  if len(gameLinks) == 0:
+    return "No Games Played"
+   
+  anaylzedGames = [] 
+  for games in gameLinks: #Finds analyzedGames for all given gameType 
     anaylzedGames.append(gameAnaylzer(games)) 
 
   #Puts together Game Data for the Given Team for Every Game Played
@@ -82,12 +103,15 @@ def gameSearcher(teamCode,year):
     else: 
       teamTotalData.append(games['homeTeam'])
 
+  
 
   # In[ ]:
-
-
+  
+  
   #Calculates Total Season Stats
   fullPlayerStats = teamTotalData[0]
+  if len(teamTotalData) == 1:
+    return fullPlayerStats
 
   for data in teamTotalData:
     if data != fullPlayerStats:
@@ -126,6 +150,6 @@ def gameSearcher(teamCode,year):
     
         
         
-#print(gameSearcher("533","2036"))
+print(gameSearcher("533","2036",""))
 
 
