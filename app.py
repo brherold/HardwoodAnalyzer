@@ -39,10 +39,16 @@ def seasonAnalyzerYear(code):
         return redirect(url_for('seasonAnalyzer', code=code, year=year))
     return render_template('seasonAnalyzerYear.html', code=code)
 
-@app.route("/seasonAnalyzer/<code>/<year>")
-def seasonAnalyzer(code, year):
-    sample_data = gameSearcher(code, year,"")
-    return render_template('seasonAnalyzer.html', data=sample_data,year=year)
+@app.route("/seasonAnalyzer/<code>/<year>/<game_type>")
+@app.route("/seasonAnalyzer/<code>/<year>", defaults={'game_type': 'Total'})
+def seasonAnalyzer(code, year, game_type):
+    sample_data = gameSearcher(code, year, game_type)
+    
+    if sample_data == "No Games Played":
+        errorMsg = "No Games Played"
+        return render_template('error.html', error_message=errorMsg)
+    
+    return render_template('seasonAnalyzer.html', data=sample_data,year=year,game_type=game_type)
 
 if __name__ == '__main__':
     app.run()

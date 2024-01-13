@@ -62,7 +62,7 @@
 </head>
 <body>
 <h1><a href="http://onlinecollegebasketball.org/team/{{data['teamCode']}}">{{data["name"]}}</a> {{year}}</h1>
-
+<h2>{{game_type}} Games</h2>
 <h2>Players</h2>
 <table>
   <tr>
@@ -197,7 +197,7 @@
   </tr>
   {% endfor %}
 </table>
-<select name='GameType'>
+<select id="gameTypeSelect" name='GameType' onchange="changeGameType()">
   <option value=''>Total</option>
   <option value='Conference'>Conference</option>
   <option value='Playoff'>Playoff</option>
@@ -206,3 +206,16 @@
 <a href="{{ url_for('home') }}"><button>Home</button></a>
 </body>
 </html>
+<script>
+  function changeGameType() {
+    var selectedGameType = document.getElementById("gameTypeSelect").value;
+    var selectedYear = "{{ year }}";  // Assuming you pass 'year' to the template from Flask
+    var selectedCode = "{{ data['teamCode'] }}";  // Assuming you pass 'teamCode' to the template from Flask
+
+    // Build the new URL with the selected parameters
+    var newUrl = "/seasonAnalyzer/" + selectedCode + "/" + selectedYear + "/" + selectedGameType;
+
+    // Redirect to the new URL
+    window.location.href = newUrl;
+  }
+</script>

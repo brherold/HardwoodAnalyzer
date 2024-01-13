@@ -150,6 +150,6 @@ def gameSearcher(teamCode,year,gameType):
     
         
         
-print(gameSearcher("533","2036",""))
+#print(gameSearcher("533","2036",""))
 
 
