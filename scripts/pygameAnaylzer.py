@@ -92,14 +92,17 @@ def gameAnaylzer(gameUrl):
           
           #Name + Position Text Var
           namePosText = infoListPlayers[i].text[3:]
-          namePosSplit = namePosText.split()
+          namePosSplit = namePosText.split()[-2:]
+          
           
           
           #name, position = infoListPlayers[i].text.split("\xa0")[1:]
-          name = ' '.join(namePosSplit[0:-1])
+          #name = ' '.join(namePosSplit[0:-1])
+          name = namePosSplit[0]
+
           
           position = namePosSplit[-1]
-          
+
           
           # Append a new player dictionary if the player index exceeds the current list length
           if len(gameData[curTeam]["players"]) <= i:
@@ -118,7 +121,7 @@ def gameAnaylzer(gameUrl):
       except AttributeError:
           continue
 
-      
+  
 
 
 
@@ -183,6 +186,7 @@ def gameAnaylzer(gameUrl):
         drive_index = words.index("drives")
         player_index = drive_index - 1
       player_name = words[player_index] #driver name
+      
 
       
       if team in gameData["homeTeam"]["name"]:
@@ -261,6 +265,7 @@ def gameAnaylzer(gameUrl):
                 gameData[oppTeam]["defense"][defense][shot_type][1] += 1
 
   return gameData
+  
    
 
 
