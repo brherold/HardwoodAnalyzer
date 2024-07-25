@@ -144,6 +144,54 @@
   </tr>
 </table>
 
+<h2>Defense</h2>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Finishing</th>
+    <th>Inside Shot</th>
+    <th>Mid-Range</th>
+    <th>3-Pointer</th>
+  </tr>
+  {% for category, values in data['awayTeam']['defense'].items() %}
+  <tr>
+    <td>{{ category }}</td>
+    <td>
+      {{ values['Finishing'][0] }}/{{ values['Finishing'][1] }}
+      {% if values['Finishing'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Finishing'][0] / values['Finishing'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Inside Shot'][0] }}/{{ values['Inside Shot'][1] }}
+      {% if values['Inside Shot'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Inside Shot'][0] / values['Inside Shot'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Mid-Range'][0] }}/{{ values['Mid-Range'][1] }}
+      {% if values['Mid-Range'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Mid-Range'][0] / values['Mid-Range'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['3-Pointer'][0] }}/{{ values['3-Pointer'][1] }}
+      {% if values['3-Pointer'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['3-Pointer'][0] / values['3-Pointer'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
 <!-- Home Team Table -->
 <h2><a href="http://onlinecollegebasketball.org/team/{{data['homeTeam']['teamCode']}}">{{ data['homeTeam']['name'] }}</h2></a>
 <table>
@@ -217,6 +265,54 @@
       <span class="percentage">({{ '%.0f' % home_driving_percentage }}%)</span>
     </td>
   </tr>
+</table>
+
+<h2>Defense</h2>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Finishing</th>
+    <th>Inside Shot</th>
+    <th>Mid-Range</th>
+    <th>3-Pointer</th>
+  </tr>
+  {% for category, values in data['homeTeam']['defense'].items() %}
+  <tr>
+    <td>{{ category }}</td>
+    <td>
+      {{ values['Finishing'][0] }}/{{ values['Finishing'][1] }}
+      {% if values['Finishing'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Finishing'][0] / values['Finishing'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Inside Shot'][0] }}/{{ values['Inside Shot'][1] }}
+      {% if values['Inside Shot'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Inside Shot'][0] / values['Inside Shot'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Mid-Range'][0] }}/{{ values['Mid-Range'][1] }}
+      {% if values['Mid-Range'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Mid-Range'][0] / values['Mid-Range'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['3-Pointer'][0] }}/{{ values['3-Pointer'][1] }}
+      {% if values['3-Pointer'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['3-Pointer'][0] / values['3-Pointer'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
 </table>
 
 <!-- Home Button -->
