@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import hashlib
 import os
+
+
 #USE PYTHON ANACADONA 3.8.5 to RUN
 
 #Saves HTML Content to local File
@@ -66,7 +68,7 @@ def gameAnaylzer(gameUrl):
     "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}}
   }
 }
-
+  
 
 
   teamSwitch = 0 
@@ -74,13 +76,33 @@ def gameAnaylzer(gameUrl):
   infoListPlayers = infoList[4:]  # cuts it to the first player in BoxScore
   
 
+  
 
   for i in range(len(infoListPlayers)):
       
-      if len(infoListPlayers[i].text.split("\xa0")) == 3:
+      '''
+      if len(infoListPlayers[i].text.split("\xa0")) == 3 :
+          playerCode = infoListPlayers[i].find("a").get("href").split("/")[2]
+      '''
+      try:
+          infoListPlayers[i].find("a").get("href").split("/")[2]
           playerCode = infoListPlayers[i].find("a").get("href").split("/")[2]
           
-          name, position = infoListPlayers[i].text.split("\xa0")[1:]
+
+          
+          #Name + Position Text Var
+          namePosText = infoListPlayers[i].text[3:]
+          namePosSplit = namePosText.split()[-2:]
+          
+          
+          
+          #name, position = infoListPlayers[i].text.split("\xa0")[1:]
+          #name = ' '.join(namePosSplit[0:-1])
+          name = namePosSplit[0]
+
+          
+          position = namePosSplit[-1]
+
           
           # Append a new player dictionary if the player index exceeds the current list length
           if len(gameData[curTeam]["players"]) <= i:
@@ -96,12 +118,23 @@ def gameAnaylzer(gameUrl):
           # Switch the team if the next player is "Total" and the current team is "homeTeam"
           if infoListPlayers[i + 1].text == "Total" and curTeam == "awayTeam":
               curTeam = "homeTeam"
+      except AttributeError:
+          continue
+
+  
+
+
+
 
   playbyText = soup.find_all("div",id="Boxscore")[1].text
   gameArr = playbyText.split("\n")
   tipOff = gameArr[10]
   x = soup.find_all("div",id="Boxscore")[1]
-  teamEventArr = x.find_all("b")[3:] #shows time and Team for each play-by-play Event (lined up with gameStartArr)
+  teamEventArr = x.find_all("b")[3:]  #shows time and Team for each play-by-play Event (lined up with gameStartArr)
+
+
+
+
 
   #Lines up the events of gameEventsArr and teamEventArr
   gameEventsArr = gameArr[10:] # play-by-play Events
@@ -153,6 +186,7 @@ def gameAnaylzer(gameUrl):
         drive_index = words.index("drives")
         player_index = drive_index - 1
       player_name = words[player_index] #driver name
+      
 
       
       if team in gameData["homeTeam"]["name"]:
@@ -231,6 +265,8 @@ def gameAnaylzer(gameUrl):
                 gameData[oppTeam]["defense"][defense][shot_type][1] += 1
 
   return gameData
+  
+   
 
 
-#print(gameAnaylzer("http://onlinecollegebasketball.org/game/856168"))
+#print(gameAnaylzer("http://onlinecollegebasketball.org/game/932858"))
