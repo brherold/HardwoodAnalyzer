@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hardwood Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 35px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        nav{
+            display:flex;
+            justify-content: flex-end
+
+
+        }
+        nav p{
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <p>RecruitSearcher</p>
+        <p>StatPredictor</p>
+    </nav>
+    <div class="container">
+        
+        <h1>Hardwood Analyzer</h1>
+        <form method="post">
+            <input type="text" name="code" placeholder="Enter Team Code or Game URL">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
