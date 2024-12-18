@@ -34,22 +34,28 @@ def gameSearcher(teamCode,year,gameType):
   
   cache_folder = "TeamsHTML"
   cache_filename = os.path.join(cache_folder, f"{teamCode}_{year}.html")
-  try:
-        # Try to load HTML content from the local cache
-        html_content = load_html_from_file(cache_filename)
-        #print("Content loaded from local cache.")
-  except FileNotFoundError:
-        # If not found, fetch the content from the URL
-        response = requests.get(teamScheduleUrl)
-        html_content = response.text
 
-        # Save HTML content to the local cache
-        save_html_to_file(html_content, cache_filename)
-        #print("Content fetched from URL and saved to local cache.")
+  if int(year) < int("2043"): #change for current year
+    try:
+          # Try to load HTML content from the local cache
+          html_content = load_html_from_file(cache_filename)
+          #print("Content loaded from local cache.")
+    except FileNotFoundError:
+          # If not found, fetch the content from the URL
+          response = requests.get(teamScheduleUrl)
+          html_content = response.text
+
+          # Save HTML content to the local cache
+          save_html_to_file(html_content, cache_filename)
+          #print("Content fetched from URL and saved to local cache.")
+    soup2 = BeautifulSoup(html_content,"html")
+  else:
+    page2 = requests.get(teamScheduleUrl)
+    soup2 = BeautifulSoup(page2.text,"html")
 
   #page2 = requests.get(teamScheduleUrl)
   #soup2 = BeautifulSoup(page2.text,"html")
-  soup2 = BeautifulSoup(html_content,"html")
+  
 
 
   # In[3]:
@@ -150,6 +156,6 @@ def gameSearcher(teamCode,year,gameType):
     
         
         
-#print(gameSearcher("533","2036",""))
+#print(gameSearcher("533","2042",""))
 
 
