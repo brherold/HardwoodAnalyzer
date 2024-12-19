@@ -190,7 +190,12 @@
       {% endif %}
     </td>
     <td>
-      {{ values['Turnovers'] }}
+      {{ values['Turnovers'][0] }}/{{ values['Turnovers'][1] }}
+      {% if values['Turnovers'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Turnovers'][0] / values['Turnovers'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}
@@ -317,7 +322,12 @@
       {% endif %}
     </td>
     <td>
-      {{ values['Turnovers'] }}
+      {{ values['Turnovers'][0] }}/{{ values['Turnovers'][1] }}
+      {% if values['Turnovers'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Turnovers'][0] / values['Turnovers'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}
