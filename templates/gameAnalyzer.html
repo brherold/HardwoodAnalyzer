@@ -152,6 +152,7 @@
     <th>Inside Shot</th>
     <th>Mid-Range</th>
     <th>3-Pointer</th>
+    <th>Forced Turnovers</th>
   </tr>
   {% for category, values in data['awayTeam']['defense'].items() %}
   <tr>
@@ -187,6 +188,9 @@
       {% else %}
         <span class="percentage">(0%)</span>
       {% endif %}
+    </td>
+    <td>
+      {{ values['Turnovers'] }}
     </td>
   </tr>
   {% endfor %}
@@ -275,6 +279,7 @@
     <th>Inside Shot</th>
     <th>Mid-Range</th>
     <th>3-Pointer</th>
+    <th>Forced Turnovers</th>
   </tr>
   {% for category, values in data['homeTeam']['defense'].items() %}
   <tr>
@@ -310,6 +315,9 @@
       {% else %}
         <span class="percentage">(0%)</span>
       {% endif %}
+    </td>
+    <td>
+      {{ values['Turnovers'] }}
     </td>
   </tr>
   {% endfor %}

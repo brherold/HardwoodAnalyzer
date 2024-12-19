@@ -50,14 +50,15 @@ def gameAnaylzer(gameUrl):
     "players":[],
     "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
     "totalDriving":[0,0],
-    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-                 "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-                 "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},    
-    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "zone defense packed":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "zone defense extended":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}}
+    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+                 "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+                 "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},    
+    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "zone defense packed":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "zone defense extended":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "half-court": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0}}
   }
   ,
   "homeTeam":{
@@ -66,14 +67,15 @@ def gameAnaylzer(gameUrl):
     "players":[],
     "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
     "totalDriving":[0,0],
-    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-                 "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-                 "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},    
-    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "zone defense packed":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "zone defense extended":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}}
+    "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+                 "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+                 "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},    
+    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "zone defense packed":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "zone defense extended":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0},
+    "half-court": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": 0}}
   }
 }
   
@@ -224,6 +226,28 @@ def gameAnaylzer(gameUrl):
 
   #Adds every FG into the gameData per Player
   for event in gameEventsArr:
+    #Adds turnovers in defense (not offensive fouls)
+    if "turns the ball over" in event or "steals the pass" in event:
+
+      words = event.split()
+      team = words[0][:-1]
+      if team in gameData["homeTeam"]["name"]:
+        team = "homeTeam"
+        oppTeam = "awayTeam"  
+      else:
+        team = "awayTeam"
+        oppTeam = "homeTeam"
+
+      try:
+        defense = [defense for defense in gameData["awayTeam"]["defense"] if defense in event][-1]
+        
+      except IndexError:
+        #print(event)
+        defense = "half-court"
+      
+      gameData[oppTeam]["defense"][defense]["Turnovers"] += 1
+      
+    #For searching shots
     for shot_type, shots in shotTypes.items():
       for shot in shots:
         shot_attempt = 0
@@ -233,15 +257,23 @@ def gameAnaylzer(gameUrl):
           player_name = words[player_index]
           team = words[0][:-1]
 
-            #Finds the type of defense (doesn't matter for gameData["team"])
+          
+
+          #Finds the type of defense (doesn't matter for gameData["team"])
           try:
             defense = [defense for defense in gameData["awayTeam"]["defense"] if defense in event][-1]
+            
+            
+
           except IndexError:
-            defense = "no defense"
+            defense = "half-court"
+          
+          
 
           if "Slam dunk" in event or "shot goes in" in event or "tips it in" == shot:
             shot_attempt = 1
           
+
           #For Fast-breaks
 
           if ("Breakaway" in event or "Fast break opportunity" in event) and "slow it down" not in event:
@@ -252,29 +284,38 @@ def gameAnaylzer(gameUrl):
           #For Drives
           if shot in Finishing and "drives" in event and words[words.index("drives") - 1] == player_name:
             shot_type = "Finishing"
+          
+          
+              
 
           #finds player and accumlates the shot in gameData
           if team in gameData["homeTeam"]["name"]:
             team = "homeTeam"
             oppTeam = "awayTeam"
+            
           else:
             team = "awayTeam"
             oppTeam = "homeTeam"
-
+          
+          
+            
+        
           for player in gameData[team]["players"]:
+            
+            
+            
             if player["name"] == player_name:
+              
               player["shots"][shot_type][0] += shot_attempt
               player["shots"][shot_type][1] += 1
               gameData[team]["totalShots"][shot_type][0] += shot_attempt
               gameData[team]["totalShots"][shot_type][1] += 1
 
-              if defense != "no defense":
-                gameData[oppTeam]["defense"][defense][shot_type][0] += shot_attempt
-                gameData[oppTeam]["defense"][defense][shot_type][1] += 1
-
+              gameData[oppTeam]["defense"][defense][shot_type][0] += shot_attempt
+              gameData[oppTeam]["defense"][defense][shot_type][1] += 1
+    
   return gameData
-  
    
 
 
-#print(gameAnaylzer("http://onlinecollegebasketball.org/game/989125"))
+#print(gameAnaylzer("http://onlinecollegebasketball.org/game/1004406"))

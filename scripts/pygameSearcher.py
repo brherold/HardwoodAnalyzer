@@ -144,8 +144,11 @@ def gameSearcher(teamCode,year,gameType):
       
       for defense in data["defense"]:
         for defendedShot in data["defense"][defense]:
-          fullPlayerStats["defense"][defense][defendedShot][0] += data["defense"][defense][defendedShot][0]
-          fullPlayerStats["defense"][defense][defendedShot][1] += data["defense"][defense][defendedShot][1]
+          if defendedShot == "Turnovers":
+            fullPlayerStats["defense"][defense][defendedShot] += data["defense"][defense][defendedShot]
+          else:
+            fullPlayerStats["defense"][defense][defendedShot][0] += data["defense"][defense][defendedShot][0]
+            fullPlayerStats["defense"][defense][defendedShot][1] += data["defense"][defense][defendedShot][1]
 
     
 
@@ -156,6 +159,6 @@ def gameSearcher(teamCode,year,gameType):
     
         
         
-#print(gameSearcher("533","2042",""))
+#print(gameSearcher("533","2043",""))
 
 
