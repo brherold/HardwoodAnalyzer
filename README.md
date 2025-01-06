@@ -1,13 +1,48 @@
-HardwoodAnalyzer
+# Hardwood Stats Analyzer
 
-Overview
-The Basketball Stats Analyzer is a Flask-based project designed to analyze the box score of a game or a team's season statistics for an online college basketball game. This tool provides insights into player performance, team strengths and weaknesses, and overall trends throughout the season.
+Specifically for the game: http://onlinecollegebasketball.org/
 
-Features
-Box Score Analysis: Input the box score of a game and get detailed analysis on individual player performances, team statistics, and game trends.
+Hardwood Stats Analyzer is a Flask-based web application designed to web scrape and display detailed player and team statistics from an online college basketball game . It provides users with tools to analyze shot type percentages and defensive performance metrics.
 
-Season Statistics Analysis: Analyze a team's season statistics to identify key players, strengths, weaknesses.
+## Features
 
-User-Friendly Interface: Simple and intuitive command-line interface for ease of use.
+- **Web Scraping**: Used BeautifulSoup to scrape player and team statistics from either specific games or full seasons.
+- **Comprehensive Analysis**: Enabled in-depth analysis of different shot type percentages and defensive performance metrics.
+- **User Impact**: Utilized by over 100 users within the game to analyze player performance and team strategies effectively.
+- **Interactive Interface**: Delivered insights via an easy-to-navigate Flask web application.
 
-For: http://onlinecollegebasketball.org/
+## Technologies Used
+
+- **Programming Language**: Python
+- **Libraries and Tools**:
+  - BeautifulSoup (Web scraping)
+  - Flask (Web framework)
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/brherold/HardwoodAnalyzer.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd HardwoodAnalyzer
+   ```
+3. Install the required Python libraries:
+   ```bash
+   pip install beautifulsoup4 flask
+   ```
+
+## Usage
+
+1. **Run the Flask application**:
+   ```bash
+   python app.py
+   ```
+2. Open your web browser and go to:
+   ```
+   http://127.0.0.1:5000
+   ```
+3. Use the interface to input game or team season data
+
+
