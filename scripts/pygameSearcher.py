@@ -7,9 +7,17 @@
 from bs4 import BeautifulSoup
 import requests
 import os
-from pygameAnaylzer import gameAnaylzer
+from pygameAnalyzer import gameAnalyzer
 
 
+#Finds current season in Hardwood
+def find_current_season(): 
+    url = "http://onlinecollegebasketball.org/schedule/1"
+
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, "html.parser")
+
+    return int(soup.find("h1").text.split(" ")[0])
 
 #USE PYTHON ANACADONA 3.8.5 to RUN
 
@@ -35,7 +43,8 @@ def gameSearcher(teamCode,year,gameType):
   cache_folder = "TeamsHTML"
   cache_filename = os.path.join(cache_folder, f"{teamCode}_{year}.html")
 
-  if int(year) < int("2043"): #change for current year
+  
+  if int(year) < find_current_season(): #change for current year
     try:
           # Try to load HTML content from the local cache
           html_content = load_html_from_file(cache_filename)
@@ -99,15 +108,18 @@ def gameSearcher(teamCode,year,gameType):
    
   anaylzedGames = [] 
   for games in gameLinks: #Finds analyzedGames for all given gameType 
-    anaylzedGames.append(gameAnaylzer(games)) 
+    anaylzedGames.append(gameAnalyzer(games)) 
 
   #Puts together Game Data for the Given Team for Every Game Played
   teamTotalData = []
+  oppTeamTotalData = []
   for games in anaylzedGames:
     if games['awayTeam']['teamCode'] == teamCode:
       teamTotalData.append(games['awayTeam'])
+      oppTeamTotalData.append(games['homeTeam'])
     else: 
       teamTotalData.append(games['homeTeam'])
+      oppTeamTotalData.append(games['awayTeam'])
 
   
 
@@ -129,10 +141,7 @@ def gameSearcher(teamCode,year,gameType):
         else:
           for index, player in enumerate(fullPlayerStats["players"]): # finds index of player in fullPlayerStats
             if player["name"] == dataPlayerName:
-              fullPlayerStats["players"][index]["driving"][0] += dataPlayer["driving"][0]
-              fullPlayerStats["players"][index]["driving"][1] += dataPlayer["driving"][1]
-              fullPlayerStats["totalDriving"][0] += dataPlayer["driving"][0]
-              fullPlayerStats["totalDriving"][1] += dataPlayer["driving"][1]
+
 
               for shot_type in fullPlayerStats["players"][index]["shots"]:
                 fullPlayerStats["players"][index]["shots"][shot_type][0] += dataPlayer["shots"][shot_type][0]
@@ -146,9 +155,25 @@ def gameSearcher(teamCode,year,gameType):
         for defendedShot in data["defense"][defense]:
           fullPlayerStats["defense"][defense][defendedShot][0] += data["defense"][defense][defendedShot][0]
           fullPlayerStats["defense"][defense][defendedShot][1] += data["defense"][defense][defendedShot][1]
+  
+  #Adding season offensive stats against different defenses
+  fullPlayerStats["offense"] = {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+                 "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+                 "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},    
+    "zone":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+    "zone defense packed":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+    "zone defense extended":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+    "pressure":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+    "transition": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
+    "half-court": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]}}
+  
 
-    
-
+  for data in oppTeamTotalData:
+    if data != fullPlayerStats:
+      for defense in data["defense"]:
+        for defendedShot in data["defense"][defense]:
+          fullPlayerStats["offense"][defense][defendedShot][0] += data["defense"][defense][defendedShot][0]
+          fullPlayerStats["offense"][defense][defendedShot][1] += data["defense"][defense][defendedShot][1]
       
 
   return fullPlayerStats
@@ -156,6 +181,6 @@ def gameSearcher(teamCode,year,gameType):
     
         
         
-#print(gameSearcher("540","2043",""))
+#print(gameSearcher("533","2043",""))
 
 

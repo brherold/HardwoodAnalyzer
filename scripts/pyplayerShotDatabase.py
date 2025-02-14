@@ -5,7 +5,7 @@ import csv
 from pygameAnaylzer import gameAnaylzer
 from pygameSearcher import gameSearcher
 
-year = "2042"
+year = "2043"
 
 def shotData_to_csv(playerDataShots):
     with open('playerShotDatabase' + year + '.csv', 'a', newline='') as csvfile:
@@ -66,14 +66,10 @@ with open('playerShotDatabase' + year + '.csv', 'w', newline='') as csvfile:
 '''
 
 
-
+#'''
 #Adds teams from 1-430 (teamcode) into playerShotDatabaseYear.csv
-errorTeams = [12,17,24,32,38,61,81,88,94,107,112,219,227,267,
-              273,299,300,354,387,391,424,432,433,447,512,546,
-              547,548,573,628,632,648,652,658,678,679,680,690,
-              703,715,739,743,797,802,880,881,904,910,931,934,945,950.959,963,986,992]
-
-for i in range(1,999):
+errorTeams = [8, 12, 17, 24, 32, 38, 61, 81, 88, 94, 95, 102, 107, 112, 146, 164, 195, 219, 227, 267, 269, 273, 292, 354, 365, 387, 391, 424, 432, 433, 447, 482, 507, 522, 546, 548, 573, 585, 622, 628, 646, 648, 652, 658, 674, 680, 686, 698, 703, 715, 739, 800, 811, 880, 881, 904, 910, 931, 938, 944, 945, 950, 963, 976, 986, 989]
+for i in range(503,999):
     if i not in errorTeams:
         try:
             shotData_to_csv(gameSearcher(str(i), year, ""))
@@ -82,9 +78,14 @@ for i in range(1,999):
             print(f"Error with team {i}: {e}")
             errorTeams.append(i)
             continue
+    if i % 50 == 0:
+        print()
+        print(errorTeams)
+        print()
 
 print(errorTeams)
     
 
 
 #shotData_to_csv(gameSearcher(str(999), year, ""))
+#'''

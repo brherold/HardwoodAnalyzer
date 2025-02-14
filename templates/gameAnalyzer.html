@@ -79,7 +79,7 @@
     <th>Inside Shot</th>
     <th>Mid-Range</th>
     <th>3-Pointer</th>
-    <th>Driving</th>
+
   </tr>
   {% for player in data['awayTeam']['players'] %}
   <tr>
@@ -105,11 +105,7 @@
       {% set three_pointer_percentage = (player['shots']['3-Pointer'][0] / player['shots']['3-Pointer'][1]) * 100 if player['shots']['3-Pointer'][1] != 0 else 0 %}
       <span class="percentage">({{ '%.0f' % three_pointer_percentage }}%)</span>
     </td>
-    <td>
-      {{ player['driving'][0] }}/{{ player['driving'][1] }}
-      {% set driving_percentage = (player['driving'][0] / player['driving'][1]) * 100 if player['driving'][1] != 0 else 0 %}
-      <span class="percentage">({{ '%.0f' % driving_percentage }}%)</span>
-    </td>
+
   </tr>
   {% endfor %}
   <!-- Total row for away team -->
@@ -136,11 +132,7 @@
       {% set away_three_pointer_percentage = (data['awayTeam']['totalShots']['3-Pointer'][0] / data['awayTeam']['totalShots']['3-Pointer'][1]) * 100 if data['awayTeam']['totalShots']['3-Pointer'][1] != 0 else 0 %}
       <span class="percentage">({{ '%.0f' % away_three_pointer_percentage }}%)</span>
     </td>
-    <td>
-      <strong>{{ data['awayTeam']['totalDriving'][0] }}</strong> / <strong>{{ data['awayTeam']['totalDriving'][1] }}</strong>
-      {% set away_driving_percentage = (data['awayTeam']['totalDriving'][0] / data['awayTeam']['totalDriving'][1]) * 100 if data['awayTeam']['totalDriving'][1] != 0 else 0 %}
-      <span class="percentage">({{ '%.0f' % away_driving_percentage }}%)</span>
-    </td>
+
   </tr>
 </table>
 
@@ -211,7 +203,6 @@
     <th>Inside Shot</th>
     <th>Mid-Range</th>
     <th>3-Pointer</th>
-    <th>Driving</th>
   </tr>
   {% for player in data['homeTeam']['players'] %}
   <tr>
@@ -237,11 +228,7 @@
       {% set home_three_pointer_percentage = (player['shots']['3-Pointer'][0] / player['shots']['3-Pointer'][1]) * 100 if player['shots']['3-Pointer'][1] != 0 else 0 %}
       <span class="percentage">({{ '%.0f' % home_three_pointer_percentage }}%)</span>
     </td>
-    <td>
-      {{ player['driving'][0] }}/{{ player['driving'][1] }}
-      {% set home_driving_percentage = (player['driving'][0] / player['driving'][1]) * 100 if player['driving'][1] != 0 else 0 %}
-      <span class="percentage">({{ '%.0f' % home_driving_percentage }}%)</span>
-    </td>
+
   </tr>
   {% endfor %}
   <!-- Total row for home team -->
@@ -268,11 +255,7 @@
       {% set home_three_pointer_percentage = (data['homeTeam']['totalShots']['3-Pointer'][0] / data['homeTeam']['totalShots']['3-Pointer'][1]) * 100 if data['homeTeam']['totalShots']['3-Pointer'][1] != 0 else 0 %}
       <span class="percentage">({{ '%.0f' % home_three_pointer_percentage }}%)</span>
     </td>
-    <td>
-      <strong>{{ data['homeTeam']['totalDriving'][0] }}</strong> / <strong>{{ data['homeTeam']['totalDriving'][1] }}</strong>
-      {% set home_driving_percentage = (data['homeTeam']['totalDriving'][0] / data['homeTeam']['totalDriving'][1]) * 100 if data['homeTeam']['totalDriving'][1] != 0 else 0 %}
-      <span class="percentage">({{ '%.0f' % home_driving_percentage }}%)</span>
-    </td>
+
   </tr>
 </table>
 

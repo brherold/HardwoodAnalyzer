@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sys
 sys.path.append('scripts')
-from pygameAnaylzer import gameAnaylzer
+from pygameAnalyzer import gameAnalyzer
 from pygameSearcher import gameSearcher
 
 
@@ -15,7 +15,7 @@ def home():
             url = code
             #return redirect(url_for('game_analyzer', url=url))
 
-            sample_data = gameAnaylzer(url)
+            sample_data = gameAnalyzer(url)
             return render_template('gameAnalyzer.html',data = sample_data)
             
 

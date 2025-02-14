@@ -72,7 +72,6 @@
     <th>Inside Shot</th>
     <th>Mid-Range</th>
     <th>3-Pointer</th>
-    <th>Driving</th>
   </tr>
   {% for player in data['players'] %}
   <tr>
@@ -110,14 +109,6 @@
         <span class="percentage">(0%)</span>
       {% endif %}
     </td>
-    <td>
-      {{ player['driving'][0] }}/{{ player['driving'][1] }}
-      {% if player['driving'][1] != 0 %}
-        <span class="percentage">({{ '%.0f' % ((player['driving'][0] / player['driving'][1]) * 100) }}%)</span>
-      {% else %}
-        <span class="percentage">(0%)</span>
-      {% endif %}
-    </td>
   </tr>
   {% endfor %}
   <tr>
@@ -142,12 +133,65 @@
         {% set three_pointer_percentage = (data['totalShots']['3-Pointer'][0] / data['totalShots']['3-Pointer'][1]) * 100 if data['totalShots']['3-Pointer'][1] != 0 else 0 %}</strong>
       <span class="percentage">({{ '%.0f' % three_pointer_percentage }}%)</span>
     </td>
+
+  </tr>
+</table>
+
+<h2>Offense</h2>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Finishing</th>
+    <th>Inside Shot</th>
+    <th>Mid-Range</th>
+    <th>3-Pointer</th>
+    <th>Forced Turnovers</th>
+  </tr>
+  {% for category, values in data['offense'].items() %}
+  <tr>
+    <td>{{ category }}</td>
     <td>
-      <strong>{{ data['totalDriving'][0] }}/{{ data['totalDriving'][1] }}
-        {% set driving_percentage = (data['totalDriving'][0] / data['totalDriving'][1]) * 100 if data['totalDriving'][1] != 0 else 0 %}</strong>
-      <span class="percentage">({{ '%.0f' % driving_percentage }}%)</span>
+      {{ values['Finishing'][0] }}/{{ values['Finishing'][1] }}
+      {% if values['Finishing'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Finishing'][0] / values['Finishing'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Inside Shot'][0] }}/{{ values['Inside Shot'][1] }}
+      {% if values['Inside Shot'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Inside Shot'][0] / values['Inside Shot'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Mid-Range'][0] }}/{{ values['Mid-Range'][1] }}
+      {% if values['Mid-Range'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Mid-Range'][0] / values['Mid-Range'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['3-Pointer'][0] }}/{{ values['3-Pointer'][1] }}
+      {% if values['3-Pointer'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['3-Pointer'][0] / values['3-Pointer'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ values['Turnovers'][0] }}/{{ values['Turnovers'][1] }}
+      {% if values['Turnovers'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((values['Turnovers'][0] / values['Turnovers'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
     </td>
   </tr>
+  {% endfor %}
 </table>
 
 <h2>Defense</h2>
