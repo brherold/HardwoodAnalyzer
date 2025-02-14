@@ -21,6 +21,7 @@ def gameAnalyzer(gameURL):
         "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
         "players":[],
         "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+        "totalDefense":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
         "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},    
@@ -37,6 +38,7 @@ def gameAnalyzer(gameURL):
         "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
         "players":[],
         "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+        "totalDefense":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
         "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},    
@@ -333,6 +335,8 @@ def gameAnalyzer(gameURL):
                                 
                                 player["defense"][shot_type][0] += shot_attempt
                                 player["defense"][shot_type][1] += 1
+                                gameData[oppTeam]["totalDefense"][shot_type][0] += shot_attempt
+                                gameData[oppTeam]["totalDefense"][shot_type][1] += 1
 
 
             

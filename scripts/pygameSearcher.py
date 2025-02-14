@@ -131,16 +131,17 @@ def gameSearcher(teamCode,year,gameType):
   if len(teamTotalData) == 1:
     return fullPlayerStats
 
+
   for data in teamTotalData:
     if data != fullPlayerStats:
       #Now check if a player's name in data is in FullPlayerStats
       for dataPlayer in data["players"]:
-        dataPlayerName = dataPlayer["name"]
-        if not any(player['name'] == dataPlayerName for player in fullPlayerStats['players']): #If player isn't found in fullPlayerStats add it 
+        playerCode = dataPlayer["playerCode"]
+        if not any(player['playerCode'] == playerCode for player in fullPlayerStats['players']): #If player isn't found in fullPlayerStats add it 
           fullPlayerStats["players"].append(dataPlayer)
         else:
           for index, player in enumerate(fullPlayerStats["players"]): # finds index of player in fullPlayerStats
-            if player["name"] == dataPlayerName:
+            if player["playerCode"] == playerCode:
 
 
               for shot_type in fullPlayerStats["players"][index]["shots"]:
@@ -148,6 +149,17 @@ def gameSearcher(teamCode,year,gameType):
                 fullPlayerStats["players"][index]["shots"][shot_type][1] += dataPlayer["shots"][shot_type][1]
                 fullPlayerStats["totalShots"][shot_type][0] += dataPlayer["shots"][shot_type][0]
                 fullPlayerStats["totalShots"][shot_type][1] += dataPlayer["shots"][shot_type][1]
+
+                fullPlayerStats["players"][index]["defense"][shot_type][0] += dataPlayer["defense"][shot_type][0]
+                fullPlayerStats["players"][index]["defense"][shot_type][1] += dataPlayer["defense"][shot_type][1]
+
+                fullPlayerStats["totalDefense"][shot_type][0] += dataPlayer["defense"][shot_type][0]
+                fullPlayerStats["totalDefense"][shot_type][1] += dataPlayer["defense"][shot_type][1]
+
+
+
+              
+
 
       
       

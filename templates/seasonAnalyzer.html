@@ -63,7 +63,7 @@
 <body>
 <h1><a href="http://onlinecollegebasketball.org/team/{{data['teamCode']}}">{{data["name"]}}</a> {{year}}</h1>
 <h2>{{game_type}} Games</h2>
-<h2>Players</h2>
+<h2>Players' Shots</h2>
 <table>
   <tr>
     <th>Name</th>
@@ -137,7 +137,81 @@
   </tr>
 </table>
 
-<h2>Offense</h2>
+<h2>Players' Defense</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Finishing</th>
+    <th>Inside Shot</th>
+    <th>Mid-Range</th>
+    <th>3-Pointer</th>
+  </tr>
+  {% for player in data['players'] %}
+  <tr>
+    <td><a href="http://onlinecollegebasketball.org/player/{{player['playerCode']}}">{{ player['name'] }}</td></a>
+    <td>{{ player['position'] }}</td>
+    <td>
+      {{ player['defense']['Finishing'][0] }}/{{ player['defense']['Finishing'][1] }}
+      {% if player['defense']['Finishing'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((player['defense']['Finishing'][0] / player['defense']['Finishing'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ player['defense']['Inside Shot'][0] }}/{{ player['defense']['Inside Shot'][1] }}
+      {% if player['defense']['Inside Shot'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((player['defense']['Inside Shot'][0] / player['defense']['Inside Shot'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ player['defense']['Mid-Range'][0] }}/{{ player['defense']['Mid-Range'][1] }}
+      {% if player['defense']['Mid-Range'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((player['defense']['Mid-Range'][0] / player['defense']['Mid-Range'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+    <td>
+      {{ player['defense']['3-Pointer'][0] }}/{{ player['defense']['3-Pointer'][1] }}
+      {% if player['defense']['3-Pointer'][1] != 0 %}
+        <span class="percentage">({{ '%.0f' % ((player['defense']['3-Pointer'][0] / player['defense']['3-Pointer'][1]) * 100) }}%)</span>
+      {% else %}
+        <span class="percentage">(0%)</span>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td><strong>Total Defense</strong></td>
+    <td></td>
+    <td><strong>{{ data['totalDefense']['Finishing'][0] }}/{{ data['totalDefense']['Finishing'][1] }}
+      {% set finishing_percentage = (data['totalDefense']['Finishing'][0] / data['totalDefense']['Finishing'][1]) * 100 if data['totalDefense']['Finishing'][1] != 0 else 0 %}</strong>
+      <span class="percentage">({{ '%.0f' % finishing_percentage }}%)</span>
+    </td>
+    <td>
+      <strong>{{ data['totalDefense']['Inside Shot'][0] }}/{{ data['totalDefense']['Inside Shot'][1] }}
+        {% set inside_shot_percentage = (data['totalDefense']['Inside Shot'][0] / data['totalDefense']['Inside Shot'][1]) * 100 if data['totalDefense']['Inside Shot'][1] != 0 else 0 %}</strong>
+      <span class="percentage">({{ '%.0f' % inside_shot_percentage }}%)</span>
+    </td>
+    <td>
+      <strong>{{ data['totalDefense']['Mid-Range'][0] }}/{{ data['totalDefense']['Mid-Range'][1] }}
+        {% set mid_range_percentage = (data['totalDefense']['Mid-Range'][0] / data['totalDefense']['Mid-Range'][1]) * 100 if data['totalDefense']['Mid-Range'][1] != 0 else 0 %}</strong>
+      <span class="percentage">({{ '%.0f' % mid_range_percentage }}%)</span>
+    </td>
+    <td>
+      <strong>{{ data['totalDefense']['3-Pointer'][0] }}/{{ data['totalDefense']['3-Pointer'][1] }}
+        {% set three_pointer_percentage = (data['totalDefense']['3-Pointer'][0] / data['totalDefense']['3-Pointer'][1]) * 100 if data['totalDefense']['3-Pointer'][1] != 0 else 0 %}</strong>
+      <span class="percentage">({{ '%.0f' % three_pointer_percentage }}%)</span>
+    </td>
+
+  </tr>
+</table>
+
+<h2>Team's Offense</h2>
 <table>
   <tr>
     <th>Category</th>
@@ -194,7 +268,7 @@
   {% endfor %}
 </table>
 
-<h2>Defense</h2>
+<h2>Team's Defense</h2>
 <table>
   <tr>
     <th>Category</th>
