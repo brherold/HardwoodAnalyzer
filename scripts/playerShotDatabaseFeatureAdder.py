@@ -6,7 +6,8 @@ import csv
 
 # Define the new field names
 fieldnames = ['Player', 'PlayerID', 'F-M', 'F-A', 'F%', 'IS-M', 'IS-A', 'IS%', 
-              'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'DR-M', 'DR-A', 'DR%']
+              'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'OF-M', 'OF-A', 'OF%', 'OIS-M', 'OIS-A', 'OIS%', 
+              'OMR-M', 'OMR-A', 'OMR%', 'O3P-M', 'O3P-A', 'O3P%']
 
 
 playerShotDatabase = 'playerShotDatabase'
@@ -23,4 +24,4 @@ def CSVfeatureAdder(playerShotDatabase):
       writer.writerows(original_data)  # Write the original data
 
 
-CSVfeatureAdder('playerShotDatabase2042.csv')
+#CSVfeatureAdder('playerShotDatabase2042.csv')

@@ -3,6 +3,7 @@
 
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 def gameAnalyzer(gameURL):
@@ -21,7 +22,7 @@ def gameAnalyzer(gameURL):
         "teamCode":(infoList[1].find("a").get("href")).split("/")[2],
         "players":[],
         "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-        "totalDefense":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+        "totalDefense": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
         "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},    
@@ -38,7 +39,7 @@ def gameAnalyzer(gameURL):
         "teamCode":(infoList[2].find("a").get("href")).split("/")[2],
         "players":[],
         "totalShots":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
-        "totalDefense":{"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
+        "totalDefense": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
         "defense" : {"man-to-man": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense packed" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},
                     "man-to-man defense extended" : {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0], "Turnovers": [0, 0]},    
@@ -67,8 +68,9 @@ def gameAnalyzer(gameURL):
                 gameData[curTeam]["players"].append({
                     "name": name, "position": position.upper(),
                     "playerCode": playerCode,
-                    "shots": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}, 
+                    "shots": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]},
                     "defense": {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}, 
+                    "driving": [0, 0], 
                     "stats":{"Min": 0, "FT": [0,0], "PTS": 0, "Reb": 0, "AST": 0, "STL": 0, "BLK": 0, "TO": 0, "PF": 0, "FD": 0 }})
             else:
                 # Update existing player information
@@ -77,6 +79,7 @@ def gameAnalyzer(gameURL):
                 gameData[curTeam]["players"][i]["position"] = position.upper()
                 gameData[curTeam]["players"][i]["shots"] = {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}
                 gameData[curTeam]["players"][i]["defense"] = {"Finishing": [0, 0], "Inside Shot": [0, 0], "Mid-Range": [0, 0], "3-Pointer": [0, 0]}
+                gameData[curTeam]["players"][i]["driving"] = [0, 0]
                 gameData[curTeam]["players"][i]["stats"] = {"Min": 0, "FT": [0,0], "PTS": 0, "Reb": 0, "AST": 0, "STL": 0, "BLK": 0, "TO": 0, "PF": 0, "FD": 0 }
 
             # Switch the team if the next player is "Total" and the current team is "homeTeam"
@@ -126,8 +129,17 @@ def gameAnalyzer(gameURL):
     gameArr = playbyText.split("\n")
     tipOff = gameArr[10]
 
-    x = soup.find_all("div",id="Boxscore")[1]
-    teamEventArr = x.find_all("b")[3:] #shows time and Team for each play-by-play Event (lined up with gameStartArr)
+    #Finds names of team to fit with gamelog names
+    x = soup.find_all("div",id="Boxscore")[1].get_text(separator="\n")
+                                                    
+    split_content = re.split(r'\n|:', x)
+
+
+    away_team_name = split_content[8]
+    home_team_name = split_content[12]
+
+    gameData["awayTeam"]["name"] = away_team_name
+    gameData["homeTeam"]["name"] = home_team_name
 
     #Lines up the events of gameEventsArr and teamEventArr
     gameEventsArr = gameArr[10:] # play-by-play Events
@@ -160,15 +172,22 @@ def gameAnalyzer(gameURL):
     # For splitting every shot attempt to a new line (including tip ins from missed shots)
     newGameEventsArr = []
 
-    for event in gameEventsArr:
-        if ("misses" in event or "blocks" in event or "blocked" in event) and ("tips it in") in event:
-            words = event.split(":")
+    for i, event in enumerate(gameEventsArr):
+        "Finds team in the event and replaces it with either 'homeTeam' or 'awayTeam'"
+        "Standardizes finding the team "
+        event_team = event.split(":")[0]
+        if home_team_name == event_team:
+            event = event.replace(home_team_name, "homeTeam")
+        else:
+            event = event.replace(away_team_name, "awayTeam")
 
+
+        if ("misses" in event or "blocks" in event or "blocked" in event) and ("tips it in") in event:           
+            words = event.split(":")
             team = words[0]
-            sentence_event = event.split(". ")
-            newGameEventsArr.append("".join(sentence_event[0:-3])) #before tip in
-            newGameEventsArr.append(team + ": " + "".join(sentence_event[-3:])) #from tip in to end of string
-            
+            sentence_event = event.split(". ")    
+            newGameEventsArr.append("".join(sentence_event[0:-3])) #before tip on
+            newGameEventsArr.append(team + ": " + "".join(sentence_event[-3:])) #from tip n on..
         else:
             newGameEventsArr.append(event)
     
@@ -253,7 +272,7 @@ def gameAnalyzer(gameURL):
     for i, event in enumerate(gameEventsArr):
         team = event.split(":")[0]
         #Find team 
-        if team in gameData["homeTeam"]["name"]:
+        if team == "homeTeam":
             team = "homeTeam"
             oppTeam = "awayTeam"  
         else:
@@ -335,8 +354,6 @@ def gameAnalyzer(gameURL):
                                 
                                 player["defense"][shot_type][0] += shot_attempt
                                 player["defense"][shot_type][1] += 1
-                                gameData[oppTeam]["totalDefense"][shot_type][0] += shot_attempt
-                                gameData[oppTeam]["totalDefense"][shot_type][1] += 1
 
 
             
@@ -382,4 +399,4 @@ def gameAnalyzer(gameURL):
 
     return gameData
 
-#print(gameAnalyzer("http://onlinecollegebasketball.org/game/1027313"))
+#print(gameAnalyzer("http://onlinecollegebasketball.org/game/1028474"))

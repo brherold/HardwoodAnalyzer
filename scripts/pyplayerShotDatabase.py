@@ -2,14 +2,16 @@ import csv
 
 #Adds Team Player Shots to playerShotDatabase.csv 
 
-from pygameAnaylzer import gameAnaylzer
+from pygameAnalyzer import gameAnalyzer
 from pygameSearcher import gameSearcher
 
 year = "2043"
 
 def shotData_to_csv(playerDataShots):
-    with open('playerShotDatabase' + year + '.csv', 'a', newline='') as csvfile:
-        fieldnames = ['Player', 'PlayerID', 'F-M', 'F-A', 'F%', 'IS-M', 'IS-A', 'IS%', 'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'DR-M', 'DR-A', 'DR%']
+    with open('playerShotDatabase' + year + 'D.csv', 'a', newline='', encoding="utf-8") as csvfile:
+        fieldnames = ['Player', 'PlayerID', 'F-M', 'F-A', 'F%', 'IS-M', 'IS-A', 'IS%', 
+              'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'OF-M', 'OF-A', 'OF%', 'OIS-M', 'OIS-A', 'OIS%', 
+              'OMR-M', 'OMR-A', 'OMR%', 'O3P-M', 'O3P-A', 'O3P%']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         for player in playerDataShots['players']:
@@ -32,10 +34,28 @@ def shotData_to_csv(playerDataShots):
                 three_pointer_percentage = player['shots']['3-Pointer'][0] / player['shots']['3-Pointer'][1]
             else:
                 three_pointer_percentage = 0.0
-            if player['driving'][1] != 0:
-                driving_percentage = player['driving'][0] / player['driving'][1]
+
+            #defense
+            if player['defense']['Finishing'][1] != 0:
+                o_finishing_percentage = player['defense']['Finishing'][0] / player['defense']['Finishing'][1]
             else:
-                driving_percentage = 0.0
+                o_finishing_percentage = 0.0
+
+            if player['defense']['Inside Shot'][1] != 0:
+                o_inside_shot_percentage = player['defense']['Inside Shot'][0] / player['defense']['Inside Shot'][1]
+            else:
+                o_inside_shot_percentage = 0.0
+
+            if player['defense']['Mid-Range'][1] != 0:
+                o_mid_range_percentage = player['defense']['Mid-Range'][0] / player['defense']['Mid-Range'][1]
+            else:
+                o_mid_range_percentage = 0.0
+
+            if player['defense']['3-Pointer'][1] != 0:
+                o_three_pointer_percentage = player['defense']['3-Pointer'][0] / player['defense']['3-Pointer'][1]
+            else:
+                o_three_pointer_percentage = 0.0
+
 
             writer.writerow({
                 'Player': player['name'],
@@ -52,15 +72,29 @@ def shotData_to_csv(playerDataShots):
                 '3P-M': player['shots']['3-Pointer'][0],
                 '3P-A': player['shots']['3-Pointer'][1],
                 '3P%': '{:.2f}'.format(three_pointer_percentage),
-                'DR-M': player['driving'][0],
-                'DR-A': player['driving'][1],
-                'DR%': '{:.2f}'.format(driving_percentage)
+
+                'OF-M': player['defense']['Finishing'][0],
+                'OF-A': player['defense']['Finishing'][1],
+                'OF%': '{:.2f}'.format(o_finishing_percentage),
+                'OIS-M': player['defense']['Inside Shot'][0],
+                'OIS-A': player['defense']['Inside Shot'][1],
+                'OIS%': '{:.2f}'.format(o_inside_shot_percentage),
+                'OMR-M': player['defense']['Mid-Range'][0],
+                'OMR-A': player['defense']['Mid-Range'][1],
+                'OMR%': '{:.2f}'.format(o_mid_range_percentage),
+                'O3P-M': player['defense']['3-Pointer'][0],
+                'O3P-A': player['defense']['3-Pointer'][1],
+                'O3P%': '{:.2f}'.format(o_three_pointer_percentage),
+
             })
+            
 
 '''
 #Creates the database"
-with open('playerShotDatabase' + year + '.csv', 'w', newline='') as csvfile:
-    fieldnames = ['Player', 'PlayerID', 'F-M', 'F-A', 'F%', 'IS-M', 'IS-A', 'IS%', 'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'DR-M', 'DR-A', 'DR%']
+with open('playerShotDatabase' + year + 'D.csv', 'w', newline='') as csvfile:
+    fieldnames = ['Player', 'PlayerID', 'F-M', 'F-A', 'F%', 'IS-M', 'IS-A', 'IS%', 
+              'MR-M', 'MR-A', 'MR%', '3P-M', '3P-A', '3P%', 'OF-M', 'OF-A', 'OF%', 'OIS-M', 'OIS-A', 'OIS%', 
+              'OMR-M', 'OMR-A', 'OMR%', 'O3P-M', 'O3P-A', 'O3P%']    
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 '''
@@ -68,16 +102,19 @@ with open('playerShotDatabase' + year + '.csv', 'w', newline='') as csvfile:
 
 #'''
 #Adds teams from 1-430 (teamcode) into playerShotDatabaseYear.csv
-errorTeams = [8, 12, 17, 24, 32, 38, 61, 81, 88, 94, 95, 102, 107, 112, 146, 164, 195, 219, 227, 267, 269, 273, 292, 354, 365, 387, 391, 424, 432, 433, 447, 482, 507, 522, 546, 548, 573, 585, 622, 628, 646, 648, 652, 658, 674, 680, 686, 698, 703, 715, 739, 800, 811, 880, 881, 904, 910, 931, 938, 944, 945, 950, 963, 976, 986, 989]
-for i in range(503,999):
-    if i not in errorTeams:
-        try:
-            shotData_to_csv(gameSearcher(str(i), year, ""))
-            print(i)
-        except Exception as e:
-            print(f"Error with team {i}: {e}")
-            errorTeams.append(i)
-            continue
+
+#errorTeams = [8, 12, 17, 24, 32, 38, 61, 81, 88, 94, 95, 102, 107, 112, 146, 164, 195, 219, 227, 267, 269, 273, 292, 354, 365, 387, 391, 424, 432, 433, 447, 482, 507, 522, 546, 548, 573, 585, 622, 628, 646, 648, 652, 658, 674, 680, 686, 698, 703, 715, 739, 800, 811, 880, 881, 904, 910, 931, 938, 944, 945, 950, 963, 976, 986, 989]
+'''
+errorTeams =[]
+
+for i in range(14,999):
+    try:
+        shotData_to_csv(gameSearcher(str(i), year, ""))
+        print(i)
+    except Exception as e:
+        print(f"Error with team {i}: {e}")
+        errorTeams.append(i)
+        continue
     if i % 50 == 0:
         print()
         print(errorTeams)
@@ -86,6 +123,10 @@ for i in range(503,999):
 print(errorTeams)
     
 
+'''
 
-#shotData_to_csv(gameSearcher(str(999), year, ""))
+
+shotData_to_csv(gameSearcher(str(867), year, ""))
 #'''
+
+

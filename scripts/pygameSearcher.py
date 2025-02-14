@@ -33,6 +33,13 @@ def load_html_from_file(filename):
     with open(filename, 'r', encoding='utf-8') as file:
         return file.read()
 
+
+def check_file_in_folder(folder_path, file_name):
+    # Construct the full file path
+    file_path = os.path.join(folder_path, file_name)
+    # Check if the file exists
+    return os.path.isfile(file_path)
+
 #Gets Team
 #teamCode = input("Enter Team Code")
 #year = input("Enter Season Year")
@@ -44,7 +51,7 @@ def gameSearcher(teamCode,year,gameType):
   cache_filename = os.path.join(cache_folder, f"{teamCode}_{year}.html")
 
   
-  if int(year) < find_current_season(): #change for current year
+  if int(year) < find_current_season(): #find_current_season(): #change for current year
     try:
           # Try to load HTML content from the local cache
           html_content = load_html_from_file(cache_filename)
@@ -83,6 +90,7 @@ def gameSearcher(teamCode,year,gameType):
       totalGameLinks.append ("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
       if rowData[2].text == "Conference":
         conGameLinks.append("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
+      
       elif rowData[2].text == "Playoff":
         playoffGameLinks.append("http://onlinecollegebasketball.org" + rowData[5].find("a").get("href"))
       elif rowData[2].text == "Tournament":
@@ -106,9 +114,32 @@ def gameSearcher(teamCode,year,gameType):
   if len(gameLinks) == 0:
     return "No Games Played"
    
+  
   anaylzedGames = [] 
   for games in gameLinks: #Finds analyzedGames for all given gameType 
     anaylzedGames.append(gameAnalyzer(games)) 
+
+
+
+  
+  '''
+  anaylzedGames = [] 
+  for games in gameLinks: #Finds analyzedGames for all given gameType
+    gameCode = games.split("/")[-1]
+    folder_path = "C:/Users/branh/Documents/Hardwood PROJECTSSSSSS/Hardwood project/GamesHTML"
+    file_name = gameCode + ".html"
+
+    if not check_file_in_folder(folder_path, file_name):
+      pass
+    else:
+      anaylzedGames.append(gameAnalyzer(games))
+  '''
+
+
+
+
+
+
 
   #Puts together Game Data for the Given Team for Every Game Played
   teamTotalData = []
@@ -127,6 +158,7 @@ def gameSearcher(teamCode,year,gameType):
   
   
   #Calculates Total Season Stats
+
   fullPlayerStats = teamTotalData[0]
   if len(teamTotalData) == 1:
     return fullPlayerStats
@@ -193,6 +225,6 @@ def gameSearcher(teamCode,year,gameType):
     
         
         
-#print(gameSearcher("533","2043",""))
+#print(gameSearcher("3","2043",""))
 
 
